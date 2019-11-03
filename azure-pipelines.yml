@@ -53,7 +53,7 @@ steps:
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)\src\PokerLeagueManager.Utilities'
     Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)\utilitys'
+    TargetFolder: '$(build.artifactstagingdirectory)\Utilties'
 
 - task: PublishBuildArtifacts@1
   inputs:

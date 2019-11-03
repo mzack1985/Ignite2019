@@ -34,7 +34,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\'
+    SourceFolder: '$(Build.SourcesDirectory)'
     Contents: |
       **\*.dacpac
       **\*.Commands.WebApi.zip
@@ -42,6 +42,7 @@ steps:
       **\*.Queries.WebApi.zip
       **\*.UI.Web.zip
     TargetFolder: '$(build.artifactstagingdirectory)'
+    flattenFolders: true
 
 - task: CopyFiles@2
   inputs:
@@ -51,9 +52,14 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\src\PokerLeagueManager.Utilities'
+    SourceFolder: '$(Build.SourcesDirectory)\src\PokerLeagueManager.Utilities\bin\$(buildConfiguration)'
     Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)\Utilities\bin\Debug'
+    TargetFolder: '$(build.artifactstagingdirectory)\Utility'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
   inputs:
@@ -61,7 +67,3 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
